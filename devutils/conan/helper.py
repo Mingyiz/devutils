@@ -7,6 +7,10 @@ import copy
 import os
 
 def webstreamer_build_template_default(name,config={}):
+    
+    if os.environ.get('CONAN_USERNAME') is None:
+        os.environ['CONAN_USERNAME'] = 'webstreamer'
+
 
     CONAN_BUILD_TYPES = config.get('CONAN_BUILD_TYPES','Debug')
     CONAN_BUILD_TYPES = os.environ.get('CONAN_BUILD_TYPES',CONAN_BUILD_TYPES)
