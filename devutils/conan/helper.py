@@ -28,5 +28,17 @@ def webstreamer_build_template_default(name,config={}):
                 builder.add(settings={"arch": "any", "build_type": build_type, 
                     "compiler": "emcc", "compiler.version": version,"compiler.libcxx":'libcxxabi'},
                     options={'%s:shared'%name :True}, env_vars={}, build_requires={})
+
+        items = []
+        for item in builder.items:
+            if not os.environ.get('CONAN_GCC_VERSIONS') and item.settings['compiler'] == 'gcc':
+                continue # 
+            if not os.environ.get('CONAN_CLANG_VERSIONS') and item.settings['compiler'] == 'clang':
+                continue # 
+            items.append(item)
+
+        builder.items = items
+
+
     return builder
 
