@@ -25,7 +25,7 @@ def _openapi(prompt:dict, model:str):
     print("--->", prompt)
     # completion = openai.chat.completions.create(model=model, **prompt)
     completion = openai.chat.completions.create(model=model, messages=prompt['messages'])
-    return completion.model_dump_json(indent=2)
+    return completion.model_dump()
 
 def chat(api:str, model:str , prompt:str, completion:str =None, provider:str = None):
     prompt_path = prompt
@@ -56,7 +56,7 @@ def chat(api:str, model:str , prompt:str, completion:str =None, provider:str = N
     print("completion:", completion)
 
     with open(completion_path, 'wt', encoding='utf-8') as f:
-        f.write(completion)
+        json.dump(completion, f, ensure_ascii=False, indent=2)
 
     console.print(f"Successfuly completion writed to {completion_path}.", style="bold green")
 
